@@ -1,0 +1,30 @@
+<apex:page standardController="Account" extensions="mock"> 
+<apex:form id="apexFrom" >
+<apex:pageBlock title="Mock" id="pageBlockId">
+<apex:pageMessages id="showmsg"></apex:pageMessages> <apex:pageBlockSection columns="2" >
+<apex:inputText value="{!name}" label="Account Name" required="true"/>
+</apex:pageBlockSection>
+<apex:pageBlockButtons >
+<apex:commandButton action="{!createAccount}" value="Save"/>
+</apex:pageBlockButtons>
+</apex:pageBlock>
+<apex:actionFunction name="createFunction" action="{!createAccount}"/>
+</apex:form>
+</apex:page>
+
+public class mock{
+public String name {get; set;}
+
+public mock(ApexPages.StandardController controller) {
+}
+public PageReference createAccount() {
+if(!String.isEmpty(name)) {
+Account accountRecord = new Account(Name = name);
+INSERT accountRecord;
+PageReference pg = new PageReference('/'+accountRecord.Id);
+pg.setRedirect(true);
+return pg;
+}
+return NULL;
+}
+}
